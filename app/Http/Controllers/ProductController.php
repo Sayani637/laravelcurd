@@ -9,7 +9,8 @@ use App\Models\Product;
 class ProductController extends Controller
 {
    public function index(){
-    return view('products.index');
+      $products=Product::get();
+    return view('products.index',['products'=>$products]);
    }
    public function create(){
     return view('products.create');
@@ -31,5 +32,9 @@ class ProductController extends Controller
     $product->description=$request->description;
     $product->save();
     return back()->withSuccess('Product Created !!!');
+   }
+   public function edit($id){
+    $product=Product::where('id',$id)->first();
+     return view('products.edit',['product'=>$product]);
    }
 }
